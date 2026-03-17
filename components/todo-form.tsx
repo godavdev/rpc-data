@@ -21,7 +21,8 @@ import {
   FieldLabel,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
-import { createTodo } from "@/app/data/todos.data"
+import { createTodoAction } from "@/app/data/todos.actions"
+import { orpc } from "@/app/libs/orcp.client"
 
 const todoFormSchema = z.object({
   name: z
@@ -40,7 +41,9 @@ export function TodoForm() {
 
   async function onSubmit(data: z.infer<typeof todoFormSchema>) {
     try {
-      await createTodo(data)
+      // await createTodoAction(data)
+      await orpc.todos.create({ name: data.name })
+
       form.reset()
     } catch (error) {
       console.error("Error al crear el todo:", error)

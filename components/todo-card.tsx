@@ -2,7 +2,7 @@
 import { useState } from "react"
 import { Button } from "./ui/button"
 import { Card, CardAction, CardHeader, CardTitle } from "./ui/card"
-import { deleteTodo, updateTodo } from "@/app/data/todos.data"
+import { updateTodoAction, deleteTodoAction } from "@/app/data/todos.actions"
 
 interface Props {
   id: string
@@ -13,11 +13,10 @@ export const TodoCard = ({ completed, id, name }: Props) => {
   const [updateLoading, setUpdateLoading] = useState(false)
   const [deleteLoading, setDeleteLoading] = useState(false)
 
-
   const toggleCompleted = async () => {
     setUpdateLoading(true)
     try {
-      await updateTodo({
+      await updateTodoAction({
         id,
         completed: !completed,
       })
@@ -29,7 +28,7 @@ export const TodoCard = ({ completed, id, name }: Props) => {
   const deleteItem = async () => {
     setDeleteLoading(true)
     try {
-      await deleteTodo({
+      await deleteTodoAction({
         id,
       })
     } finally {
@@ -47,7 +46,11 @@ export const TodoCard = ({ completed, id, name }: Props) => {
             variant={completed ? "outline" : "default"}
             disabled={updateLoading}
           >
-            {updateLoading ? "Cargando..." : completed ? "Completado" : "Completar"}
+            {updateLoading
+              ? "Cargando..."
+              : completed
+                ? "Completado"
+                : "Completar"}
           </Button>
           <Button
             onClick={deleteItem}

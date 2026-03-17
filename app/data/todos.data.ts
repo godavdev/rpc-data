@@ -1,5 +1,4 @@
-"use server"
-import { revalidatePath } from "next/cache"
+// import { revalidatePath } from "next/cache"
 import { prisma } from "../libs/prisma"
 
 export const listTodos = async () => {
@@ -14,8 +13,8 @@ export const createTodo = async ({ name }: { name: string }) => {
       completed: false,
     },
   })
-  revalidatePath("/")
-  return todo
+  // revalidatePath("/")
+  return todo 
 }
 
 export const updateTodo = async ({
@@ -34,7 +33,7 @@ export const updateTodo = async ({
       completed,
     },
   })
-  revalidatePath("/")
+  // revalidatePath("/")
   return todo
 }
 
@@ -42,6 +41,6 @@ export const deleteTodo = async ({ id }: { id: string }) => {
   const todo = await prisma.todo.delete({
     where: { id },
   })
-  revalidatePath("/")
+  // revalidatePath("/")
   return todo
 }
